@@ -1,0 +1,38 @@
+{
+  "name": "altamira_backend",
+  "version": "1.0.0",
+  "description": "Altamira REST API",
+  "main": "src/app/app.js",
+  "author": "Alejandro Barrios",
+  "license": "MIT",
+  "scripts": {
+    "indent": "yarn prettier --write ."
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.3.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "http-errors": "^1.8.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0",
+    "mssql": "^6.3.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.17",
+    "path": "^0.12.7",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "prettier": "2.2.1",
+    "sequelize-cli": "^6.2.0"
+  }
+}

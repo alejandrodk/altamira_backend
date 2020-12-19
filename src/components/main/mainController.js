@@ -1,4 +1,4 @@
-import BaseController from '../common/controllers/baseController';
+import BaseController from '../../common/controllers/baseController';
 
 class MainController extends BaseController {
   constructor() {

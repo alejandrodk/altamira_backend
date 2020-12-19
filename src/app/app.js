@@ -12,6 +12,8 @@ import Database from '../common/database';
 
 import Main from '../components/main/mainAPI';
 import Productos from '../components/productos/productosAPI';
+import Lineas from '../components/lineas/lineasAPI';
+
 class App {
   async init(app, server) {
     const result = dotenv.config();
@@ -47,9 +49,11 @@ class App {
     // Routes
     const main = new Main();
     const productos = new Productos();
+    const lineas = new Lineas();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
+    app.use('/lineas', lineas.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

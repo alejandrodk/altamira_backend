@@ -1,4 +1,4 @@
-import { Articulo } from '../../common/models';
+import { Linea } from '../../common/models';
 
 export default class ProductosRepository {
   constructor() {
@@ -6,8 +6,6 @@ export default class ProductosRepository {
   }
 
   async find() {
-    return await Articulo.findAll({
-      limit: 10,
-    });
+    return await Linea.findAll();
   }
 }

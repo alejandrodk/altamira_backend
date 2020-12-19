@@ -2,10 +2,10 @@ import { DataTypes } from 'sequelize';
 import { Entities } from '../enums/entities.enums';
 import Database from '../database';
 
-const alias = Entities.Articulos;
+const modelName = Entities.Articulos;
 const db = new Database();
 
-export const Articulo = db.sequelize.define(Entities.Articulos, {
+export const Articulo = db.sequelize.define(modelName, {
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
@@ -77,7 +77,7 @@ export const Articulo = db.sequelize.define(Entities.Articulos, {
   },
 }, {
   sequelize: db.sequelize,
-  modelName: alias,
+  modelName,
   timestamps: false,
 });
 

@@ -5,7 +5,7 @@
   "main": "src/app/app.js",
   "author": "Alejandro Barrios",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "babel index.js --out-file index-compiled.js",
     "start": "nodemon --exec babel-node ./src/bin/server.js",

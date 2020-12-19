@@ -1,13 +1,16 @@
-import BaseController from '../../models/baseController';
+import BaseController from '../common/controllers/baseController';
 
 class MainController extends BaseController {
   constructor() {
     super();
     // Bind functions to use BaseController methods
-    this.errorTest = this.errorTest.bind(this);
+    this.main = this.main.bind(this);
   }
   main(req, res) {
-    return res.send('Hello world!!');
+    MainController.sendBasicOkResponse({
+      res,
+      data: 'Hello world!!',
+    });
   }
 }
 

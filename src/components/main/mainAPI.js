@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import express from 'express';
 import MainController from './mainController';
 
@@ -9,7 +10,7 @@ class MainApi {
   }
 
   init() {
-    router.get('/', this.controller.main());
+    router.get('/', this.controller.main);
 
     return router;
   }

@@ -9,6 +9,7 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 
+import Main from '../components/main/mainAPI';
 class App {
   async init(app, server) {
     const result = dotenv.config();
@@ -38,6 +39,9 @@ class App {
     app.use(methodOverride('_method'));
 
     // Routes
+    const main = new Main();
+
+    app.use('/', main.init());
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

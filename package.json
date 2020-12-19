@@ -7,8 +7,9 @@
   "license": "MIT",
   "type": "commonjs",
   "scripts": {
-    "build": "babel index.js --out-file index-compiled.js",
-    "start": "nodemon --exec babel-node ./src/bin/server.js",
+    "build": "babel ./src -d dist --copy-files",
+    "start": "babel-node dist/bin/server.js",
+    "debug": "nodemon --exec babel-node src/bin/server.js",
     "test": "jest",
     "indent": "yarn prettier --write ."
   },

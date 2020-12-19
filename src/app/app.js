@@ -8,12 +8,18 @@ import cors from 'cors';
 import compression from 'compression';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
+import Database from '../common/database';
 
 import Main from '../components/main/mainAPI';
+import Productos from '../components/productos/productosAPI';
 class App {
   async init(app, server) {
     const result = dotenv.config();
     if (result.error) throw result.error;
+
+    // Database init
+    const db = new Database();
+    db.init();
 
     // compress all responses
     app.use(compression());
@@ -40,16 +46,18 @@ class App {
 
     // Routes
     const main = new Main();
+    const productos = new Productos();
 
     app.use('/', main.init());
+    app.use('/productos', productos.init());
 
     // catch 404 and forward to error handler
-    app.use(function (req, res, next) {
+    app.use(function(req, res, next) {
       next(createError(404));
     });
 
     // error handler
-    app.use(function (err, req, res, next) {
+    app.use(function(err, req, res, next) {
       // set locals, only providing error in development
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};

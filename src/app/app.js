@@ -13,6 +13,7 @@ import Database from '../common/database';
 import Main from '../components/main/mainAPI';
 import Productos from '../components/productos/productosAPI';
 import Lineas from '../components/lineas/lineasAPI';
+import Rubros from '../components/rubros/rubrosAPI';
 
 class App {
   async init(app, server) {
@@ -50,10 +51,12 @@ class App {
     const main = new Main();
     const productos = new Productos();
     const lineas = new Lineas();
+    const rubros = new Rubros();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
     app.use('/lineas', lineas.init());
+    app.use('/rubros', rubros.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

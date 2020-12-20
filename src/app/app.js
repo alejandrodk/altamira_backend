@@ -14,6 +14,7 @@ import Main from '../components/main/mainAPI';
 import Productos from '../components/productos/productosAPI';
 import Lineas from '../components/lineas/lineasAPI';
 import Rubros from '../components/rubros/rubrosAPI';
+import Especialidades from '../components/especialidades/especialidadesAPI';
 
 class App {
   async init(app, server) {
@@ -52,11 +53,13 @@ class App {
     const productos = new Productos();
     const lineas = new Lineas();
     const rubros = new Rubros();
+    const especialidades = new Especialidades();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
     app.use('/lineas', lineas.init());
     app.use('/rubros', rubros.init());
+    app.use('/especialidades', especialidades.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

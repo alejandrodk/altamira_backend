@@ -11,13 +11,22 @@ import {
 export default class ProductosService {
   constructor(repository) {
     this.repository = repository;
+    this.getSingleProduct = this.getSingleProduct.bind(this);
     this.getProductsList = this.getProductsList.bind(this);
+    this.getFilteredProducts = this.getFilteredProducts.bind(this);
+  }
+
+  async getSingleProduct(id) {
+    try {
+      return await this.repository.findById(id);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async getProductsList() {
     try {
-      const prods = await this.repository.find();
-      return prods;
+      return await this.repository.find();
     } catch (error) {
       console.error(error);
     }

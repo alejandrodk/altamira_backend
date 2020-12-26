@@ -18,6 +18,7 @@ class ProductosApi {
   init() {
     router.get('/', this.controller.handleList);
     router.get('/basic', this.controller.handleListBasic);
+    router.get('/:id', this.controller.handleOne);
     return router;
   }
 }

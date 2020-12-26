@@ -3,10 +3,14 @@ import { Op } from 'sequelize';
 import { ProductsCatalogLimit, ProductsCatalogOrder } from './productos.enums';
 
 export default class ProductosRepository {
-  constructor() {
-    this.find = this.find.bind(this);
-    this.getProductsByFilter = this.getProductsByFilter.bind(this);
-    this.getProductsByConditions = this.getProductsByConditions.bind(this);
+  constructor() {}
+
+  async findById(id) {
+    return await Articulo.findOne({
+      where: {
+        id
+      }
+    })
   }
 
   async find({ where, order, limit } = {}) {

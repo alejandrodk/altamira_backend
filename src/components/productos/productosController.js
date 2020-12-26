@@ -8,6 +8,18 @@ class ProductosController extends BaseController {
 
     this.handleList = this.handleList.bind(this);
     this.handleListBasic = this.handleListBasic.bind(this);
+    this.handleOne = this.handleOne.bind(this);
+  }
+
+  async handleOne(req, res) {
+    const { id } = req.params;
+    const product = await this.service.getSingleProduct(id);
+    const dto = new ProductCatalogDto(product);
+
+    ProductosController.sendBasicOkResponse({
+      res,
+      data: dto,
+    });
   }
 
   async handleList(req, res) {

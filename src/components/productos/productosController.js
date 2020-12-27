@@ -13,26 +13,30 @@ class ProductosController extends BaseController {
 
   async handleOne(req, res) {
     const { id } = req.params;
+    const { complete } = req.query;
+
     const product = await this.service.getSingleProduct(id);
-    const dto = new ProductCatalogDto(product);
+    const data = complete ? product : new ProductCatalogDto(product);
 
     ProductosController.sendBasicOkResponse({
       res,
-      data: dto,
+      data,
     });
   }
 
   async handleList(req, res) {
-    const { filter, page } = req.query;
+    const { filter, page, complete } = req.query;
     const productos = filter ?
       await this.service.getFilteredProducts({ filter, page }) :
       await this.service.getProductsList();
 
-    const dtos = productos.map(product => new ProductCatalogDto(product));
+    const data = complete ?
+      productos :
+      productos.map(product => new ProductCatalogDto(product));
 
     ProductosController.sendBasicOkResponse({
       res,
-      data: dtos,
+      data,
     });
   }
 

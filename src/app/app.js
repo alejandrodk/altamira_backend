@@ -8,13 +8,15 @@ import cors from 'cors';
 import compression from 'compression';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
-import Database from '../common/database';
 
+import Database from '../common/database/sequelize';
+import Mongodb from '../common/database/mongoose';
 import Main from '../components/main/mainAPI';
 import Productos from '../components/productos/productosAPI';
 import Lineas from '../components/lineas/lineasAPI';
 import Rubros from '../components/rubros/rubrosAPI';
 import Especialidades from '../components/especialidades/especialidadesAPI';
+import Tienda from '../components/tienda/tiendaAPI';
 
 class App {
   async init(app, server) {
@@ -23,7 +25,10 @@ class App {
 
     // Database init
     const db = new Database();
+    const mongodb = new Mongodb();
+
     db.init();
+    mongodb.init();
 
     // compress all responses
     app.use(compression());
@@ -54,12 +59,14 @@ class App {
     const lineas = new Lineas();
     const rubros = new Rubros();
     const especialidades = new Especialidades();
+    const tienda = new Tienda();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
     app.use('/lineas', lineas.init());
     app.use('/rubros', rubros.init());
     app.use('/especialidades', especialidades.init());
+    app.use('/tienda', tienda.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

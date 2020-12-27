@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { Entities } from '../enums/entities.enums';
-import Database from '../database';
+import Database from '../database/sequelize';
 
 const modelName = Entities.Rubros;
 const db = new Database();

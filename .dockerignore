@@ -1,0 +1,10 @@
+*
+
+!package.json
+!yarn*
+!__tests__/
+!src/
+!.env*
+!Dockerfile
+!.babelrc
+!.sequelizerc

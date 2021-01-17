@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: >
+      bash -c "yarn start"
+    container_name: "altamira_backend"
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app/
+      - ./node_modules
+    environment: 
+      DOCKER_BUILDKIT: 1
+  mongo:
+    image: mongo
+    container_name: "altamira_mongo"
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../mongodb:/data/db
+    mem_limit: "4G"

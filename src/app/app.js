@@ -17,6 +17,7 @@ import Lineas from '../components/lineas/lineasAPI';
 import Rubros from '../components/rubros/rubrosAPI';
 import Especialidades from '../components/especialidades/especialidadesAPI';
 import Tienda from '../components/tienda/tiendaAPI';
+import Clientes from '../components/clientes/clientesAPI';
 
 class App {
   async init(app, server) {
@@ -60,6 +61,7 @@ class App {
     const rubros = new Rubros();
     const especialidades = new Especialidades();
     const tienda = new Tienda();
+    const clientes = new Clientes();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
@@ -67,6 +69,7 @@ class App {
     app.use('/rubros', rubros.init());
     app.use('/especialidades', especialidades.init());
     app.use('/tienda', tienda.init());
+    app.use('/clientes', clientes.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

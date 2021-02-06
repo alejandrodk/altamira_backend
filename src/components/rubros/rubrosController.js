@@ -8,23 +8,39 @@ class RubrosController extends BaseController {
   }
 
   handleList = async (req, res) => {
-    const categories = await this.service.getCategoriesList();
-    const dtos = categories.map(category => new GetCategoryDto(category));
+    try {
+      const categories = await this.service.getCategoriesList();
+      const dtos = categories.map(category => new GetCategoryDto(category));
 
-    RubrosController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      RubrosController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      RubrosController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   handleUniqueList = async (req, res) => {
-    const categories = await this.service.getUniqueCategories();
-    const dtos = categories.map(category => new GetUniqueCategoryDto(category));
+    try {
+      const categories = await this.service.getUniqueCategories();
+      const dtos = categories.map(category => new GetUniqueCategoryDto(category));
 
-    RubrosController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      RubrosController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      RubrosController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 }
 

@@ -8,25 +8,41 @@ class SpecialitiesController extends BaseController {
   }
 
   handleList = async (req, res) => {
-    const specialities = await this.service.getSpecialities();
-    const dtos = specialities.map(speciallity => new GetSpeciallityDto(speciallity));
+    try {
+      const specialities = await this.service.getSpecialities();
+      const dtos = specialities.map(speciallity => new GetSpeciallityDto(speciallity));
 
-    SpecialitiesController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      SpecialitiesController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      SpecialitiesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   handleUniqueList = async (req, res) => {
-    const specialities = await this.service.getUniqueSpecialities();
-    const dtos = specialities.map(
-        speciallity => new GetUniqueSpeciallityDto(speciallity),
-    );
+    try {
+      const specialities = await this.service.getUniqueSpecialities();
+      const dtos = specialities.map(
+          speciallity => new GetUniqueSpeciallityDto(speciallity),
+      );
 
-    SpecialitiesController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      SpecialitiesController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      SpecialitiesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 }
 

@@ -5,12 +5,16 @@ export default class TiendaRepository {
     return await Carrito.create({ cliente, descuento });
   }
 
+  async getCarts() {
+    return await Carrito.find();
+  }
+
   async getClientCart(cliente) {
-    return await Carrito.find({ cliente });
+    return await Carrito.findOne({ cliente });
   }
 
   async updateCart(cliente, data) {
-    return await Carrito.update({ cliente }, { ...data });
+    return await Carrito.updateOne({ cliente }, data);
   }
 
   async deteleCart(cliente) {

@@ -1,5 +1,7 @@
+/* eslint-disable no-invalid-this */
 import { Schema } from 'mongoose';
 import { articuloSchema } from './articuloSchema';
+import { updateCartTotalPrice } from '../../components/tienda/tiendaHelpers';
 
 export const CarritoSchema = new Schema(
     {
@@ -23,6 +25,13 @@ export const CarritoSchema = new Schema(
       },
     },
     {
+      id: false,
       timestamps: true,
     },
 );
+
+CarritoSchema.pre('updateOne', function(next) {
+  const cart = this.getUpdate();
+  updateCartTotalPrice(cart);
+  next();
+});

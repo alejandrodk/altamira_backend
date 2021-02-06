@@ -9,6 +9,17 @@ class TiendaController extends BaseController {
     this.handleOne = this.handleOne.bind(this);
     this.createOne = this.createOne.bind(this);
     this.updateOne = this.updateOne.bind(this);
+    this.handleList = this.handleList.bind(this);
+  }
+
+  async handleList(req, res) {
+    const data = await this.service.getCartList();
+    const dtos = data.map(cart => new GetCartDto(cart));
+
+    TiendaController.sendBasicOkResponse({
+      res,
+      data: dtos,
+    });
   }
 
   async handleOne(req, res) {
@@ -37,9 +48,9 @@ class TiendaController extends BaseController {
     const { cliente } = req.params;
     const { articulo, cantidad } = req.body;
     const result =
-      req.httpMethod === 'PUT' ?
-        this.service.addArticleToCart(cliente, articulo, cantidad) :
-        this.service.removeArticleFromCart(cliente, articulo, cantidad);
+      req.method === 'PUT' ?
+        this.service.updateCartArticle(cliente, articulo, cantidad) :
+        this.service.removeArticleFromCart(cliente, articulo);
 
     TiendaController.sendBasicOkResponse({
       res,

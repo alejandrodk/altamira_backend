@@ -1,14 +1,20 @@
 import { CreateCartProductDto } from './tiendaDtos';
+import { getArticleQuantity } from './tiendaHelpers';
 
 export default class TiendaService {
   constructor(repository) {
     this.repository = repository;
 
+    this.getCartList = this.getCartList.bind(this);
     this.createClientCart = this.createClientCart.bind(this);
     this.getClientCart = this.getClientCart.bind(this);
     this.updateClientCart = this.updateClientCart.bind(this);
-    this.addArticleToCart = this.addArticleToCart.bind(this);
+    this.updateCartArticle = this.updateCartArticle.bind(this);
     this.removeArticleFromCart = this.removeArticleFromCart.bind(this);
+  }
+
+  async getCartList() {
+    return await this.repository.getCarts();
   }
 
   async createClientCart(data) {
@@ -37,18 +43,27 @@ export default class TiendaService {
     }
   }
 
-  async addArticleToCart(cliente, articulo, cantidad) {
+  async updateCartArticle(cliente, articulo, cantidad) {
     try {
       const { codigo, unidad_min_vta: minVta } = articulo;
+
       const carrito = await this.repository.getClientCart(cliente);
-      const existArticle = carrito.articulos.find({ codigo });
+      const { articulos } = carrito;
+
+      const existArticle =
+        articulos.length && articulos?.find(({ codigo: c }) => c === codigo);
 
       existArticle ?
-        (carrito.articulos = carrito.articulos.map(art => {
-          if (art.codigo === codigo) art.cantidad = cantidad || minVta;
+        (carrito.articulos = articulos.map(art => {
+          if (art.codigo === codigo) {
+            art.cantidad = getArticleQuantity(cantidad, minVta);
+          }
           return art;
         })) :
-        carrito.articulos.push(new CreateCartProductDto(articulo, cantidad));
+        (carrito.articulos = [
+          ...articulos,
+          new CreateCartProductDto(articulo, cantidad),
+        ]);
 
       return await this.repository.updateCart(cliente, carrito);
     } catch (error) {
@@ -56,24 +71,41 @@ export default class TiendaService {
     }
   }
 
-  async removeArticleFromCart(cliente, articulo, cantidad) {
+  async removeArticleFromCart(cliente, articulo) {
     try {
-      const { codigo, unidad_min_vta: minVta } = articulo;
       const carrito = await this.repository.getClientCart(cliente);
 
-      carrito.articulos = carrito.articulos
-          .map(art => {
-            if (art.codigo === codigo) {
-              art.cantidad > art.minVta && (art.cantidad -= cantidad || minVta);
-              art.cantidad <= art.minVta && (art.cantidad = 0);
-            }
-            return art;
-          })
-          .filter(art => art.cantidad);
+      carrito.articulos = carrito.articulos.filter(({ codigo }) => codigo !== articulo);
 
       return this.repository.updateCart(cliente, carrito);
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async getArticlesByStock(cliente) {
+    const carrito = await this.repository.getClientCart(cliente);
+
+    return carrito.articulos.reduce(
+        (acc, articulo) => {
+          const { stock, cantidad, unidad_min_vta: minVta } = articulo;
+
+          if (stock > cantidad + minVta) {
+            acc.inStock = [...acc.inStock, articulo];
+          }
+          if (stock === cantidad || stock < cantidad + minVta) {
+            acc.critics = [...acc.critics, articulo];
+          }
+          if (stock < cantidad) {
+            acc.outStock = [...acc.outStock, articulo];
+          }
+          return acc;
+        },
+        {
+          inStock: [],
+          outStock: [],
+          critics: [],
+        },
+    );
   }
 }

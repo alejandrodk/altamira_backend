@@ -16,10 +16,11 @@ class TiendaApi {
   }
 
   init() {
-    router.get('/cliente', this.controller.handleOne);
+    router.get('/', this.controller.handleList);
+    router.get('/:cliente', this.controller.handleOne);
     router.post('/', this.controller.createOne);
-    router.put('/cliente', this.controller.updateOne);
-    router.delete('/cliente', this.controller.updateOne);
+    router.put('/:cliente', this.controller.updateOne);
+    router.delete('/:cliente', this.controller.updateOne);
     return router;
   }
 }

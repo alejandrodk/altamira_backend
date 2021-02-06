@@ -4,4 +4,5 @@ export const Entities = {
   Rubros: 'rubros',
   Especialidades: 'especialidades',
   Clientes: 'clientes',
+  Pedidos: 'pedidos',
 };

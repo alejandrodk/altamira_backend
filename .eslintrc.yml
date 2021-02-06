@@ -37,4 +37,5 @@ rules:
   max-nested-callbacks: [warn, 3]
   max-params: [warn, 5]
   no-async-promise-executor: 0
+  no-invalid-this: 0
   #'prettier/prettier': [error, always]

@@ -33,8 +33,8 @@ export default class BaseController {
   static sendBasicErrorResponse({ res, reason }) {
     const message = new Failure({
       reason,
-      message: ReasonPhrases.OK,
-      status: StatusCodes.OK,
+      message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
     });
     return res.status(message.status).json(message);
   }

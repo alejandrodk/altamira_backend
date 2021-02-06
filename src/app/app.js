@@ -18,7 +18,7 @@ import Rubros from '../components/rubros/rubrosAPI';
 import Especialidades from '../components/especialidades/especialidadesAPI';
 import Tienda from '../components/tienda/tiendaAPI';
 import Clientes from '../components/clientes/clientesAPI';
-
+import Pedidos from '../components/pedidos/pedidosAPI';
 class App {
   async init(app, server) {
     const result = dotenv.config();
@@ -62,6 +62,7 @@ class App {
     const especialidades = new Especialidades();
     const tienda = new Tienda();
     const clientes = new Clientes();
+    const pedidos = new Pedidos();
 
     app.use('/', main.init());
     app.use('/productos', productos.init());
@@ -70,6 +71,7 @@ class App {
     app.use('/especialidades', especialidades.init());
     app.use('/tienda', tienda.init());
     app.use('/clientes', clientes.init());
+    app.use('/pedidos', pedidos.init());
 
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {

@@ -9,11 +9,11 @@ class MainApi {
     this.controller = new MainController();
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.main);
 
     return router;
-  }
+  };
 }
 
 export default MainApi;

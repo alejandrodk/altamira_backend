@@ -5,13 +5,9 @@ class ProductosController extends BaseController {
   constructor(service) {
     super();
     this.service = service;
-
-    this.handleList = this.handleList.bind(this);
-    this.handleListBasic = this.handleListBasic.bind(this);
-    this.handleOne = this.handleOne.bind(this);
   }
 
-  async handleOne(req, res) {
+  handleOne = async (req, res) => {
     const { id } = req.params;
     const { complete } = req.query;
 
@@ -22,9 +18,9 @@ class ProductosController extends BaseController {
       res,
       data,
     });
-  }
+  };
 
-  async handleList(req, res) {
+  handleList = async (req, res) => {
     const { filter, page, complete } = req.query;
     const productos = filter ?
       await this.service.getFilteredProducts({ filter, page }) :
@@ -38,9 +34,9 @@ class ProductosController extends BaseController {
       res,
       data,
     });
-  }
+  };
 
-  async handleListBasic(req, res) {
+  handleListBasic = async (req, res) => {
     const productos = await this.service.getProductsList();
     const dtos = productos.map(product => new BasicProductDto(product));
 
@@ -48,7 +44,7 @@ class ProductosController extends BaseController {
       res,
       data: dtos,
     });
-  }
+  };
 }
 
 export default ProductosController;

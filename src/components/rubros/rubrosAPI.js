@@ -11,16 +11,14 @@ class RubrosApi {
     this.repository = new RubrosRepository();
     this.service = new RubrosService(this.repository);
     this.controller = new RubrosController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     router.get('/unique', this.controller.handleUniqueList);
 
     return router;
-  }
+  };
 }
 
 export default RubrosApi;

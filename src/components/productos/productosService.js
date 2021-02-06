@@ -11,28 +11,25 @@ import {
 export default class ProductosService {
   constructor(repository) {
     this.repository = repository;
-    this.getSingleProduct = this.getSingleProduct.bind(this);
-    this.getProductsList = this.getProductsList.bind(this);
-    this.getFilteredProducts = this.getFilteredProducts.bind(this);
   }
 
-  async getSingleProduct(id) {
+  getSingleProduct = async id => {
     try {
       return await this.repository.findById(id);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async getProductsList() {
+  getProductsList = async () => {
     try {
       return await this.repository.find();
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async getFilteredProducts({ filter, page }) {
+  getFilteredProducts = async ({ filter, page }) => {
     filter = getFiltersFromString(filter);
 
     try {
@@ -121,5 +118,5 @@ export default class ProductosService {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 }

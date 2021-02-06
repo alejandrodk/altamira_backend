@@ -11,11 +11,9 @@ class ProductosApi {
     this.repository = new ClientesRepository();
     this.service = new ClientesService(this.repository);
     this.controller = new ClientesController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     router.get('/basic', this.controller.handleListBasic);
     router.get('/:id', this.controller.handleOne);

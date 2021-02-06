@@ -11,11 +11,9 @@ class SpecialitiesApi {
     this.repository = new SpecialitiesRepository();
     this.service = new SpecialitiesService(this.repository);
     this.controller = new SpecialitiesController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     router.get('/unique', this.controller.handleUniqueList);
 

@@ -11,18 +11,16 @@ class TiendaApi {
     this.repository = new TiendaRepository();
     this.service = new TiendaService(this.repository);
     this.controller = new TiendaController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     router.get('/:cliente', this.controller.handleOne);
     router.post('/', this.controller.createOne);
     router.put('/:cliente', this.controller.updateOne);
     router.delete('/:cliente', this.controller.updateOne);
     return router;
-  }
+  };
 }
 
 export default TiendaApi;

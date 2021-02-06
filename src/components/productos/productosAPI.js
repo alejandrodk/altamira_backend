@@ -11,16 +11,14 @@ class ProductosApi {
     this.repository = new ProductosRepository();
     this.service = new ProductosService(this.repository);
     this.controller = new ProductosController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     router.get('/basic', this.controller.handleListBasic);
     router.get('/:id', this.controller.handleOne);
     return router;
-  }
+  };
 }
 
 export default ProductosApi;

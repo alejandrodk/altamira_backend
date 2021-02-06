@@ -5,14 +5,9 @@ class TiendaController extends BaseController {
   constructor(service) {
     super();
     this.service = service;
-
-    this.handleOne = this.handleOne.bind(this);
-    this.createOne = this.createOne.bind(this);
-    this.updateOne = this.updateOne.bind(this);
-    this.handleList = this.handleList.bind(this);
   }
 
-  async handleList(req, res) {
+  handleList = async (req, res) => {
     const data = await this.service.getCartList();
     const dtos = data.map(cart => new GetCartDto(cart));
 
@@ -20,9 +15,9 @@ class TiendaController extends BaseController {
       res,
       data: dtos,
     });
-  }
+  };
 
-  async handleOne(req, res) {
+  handleOne = async (req, res) => {
     const { cliente } = req.params;
 
     const cart = await this.service.getClientCart(cliente);
@@ -32,9 +27,9 @@ class TiendaController extends BaseController {
       res,
       data: dto,
     });
-  }
+  };
 
-  async createOne(req, res) {
+  createOne = async (req, res) => {
     const data = req.body;
     const result = await this.service.createClientCart(data);
 
@@ -42,9 +37,9 @@ class TiendaController extends BaseController {
       res,
       data: result,
     });
-  }
+  };
 
-  async updateOne(req, res) {
+  updateOne = async (req, res) => {
     const { cliente } = req.params;
     const { articulo, cantidad } = req.body;
     const result =
@@ -56,7 +51,7 @@ class TiendaController extends BaseController {
       res,
       data: result,
     });
-  }
+  };
 }
 
 export default TiendaController;

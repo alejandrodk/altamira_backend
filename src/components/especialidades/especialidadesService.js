@@ -4,11 +4,9 @@ import { EspecialidadesProps } from './especialidades.enums';
 export default class LineasService {
   constructor(repository) {
     this.repository = repository;
-    this.getSpecialities = this.getSpecialities.bind(this);
-    this.getUniqueSpecialities = this.getUniqueSpecialities.bind(this);
   }
 
-  async getSpecialities() {
+  getSpecialities = async () => {
     try {
       const specialities = await this.repository.find();
       return specialities;
@@ -17,7 +15,7 @@ export default class LineasService {
     }
   }
 
-  async getUniqueSpecialities() {
+  getUniqueSpecialities = async () => {
     try {
       const specialities = await this.repository.find();
       return getSingleObjectsByProperty({

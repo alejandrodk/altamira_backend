@@ -5,11 +5,9 @@ class LineasController extends BaseController {
   constructor(service) {
     super();
     this.service = service;
-
-    this.handleList = this.handleList.bind(this);
   }
 
-  async handleList(req, res) {
+  handleList = async (req, res) => {
     const brands = await this.service.getBrandsList();
     const dtos = brands.map(brand => new GetBrandDto(brand));
 
@@ -17,7 +15,7 @@ class LineasController extends BaseController {
       res,
       data: dtos,
     });
-  }
+  };
 }
 
 export default LineasController;

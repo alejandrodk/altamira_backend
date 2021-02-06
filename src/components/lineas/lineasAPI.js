@@ -11,14 +11,12 @@ class LineasApi {
     this.repository = new LineasRepository();
     this.service = new LineasService(this.repository);
     this.controller = new LineasController(this.service);
-
-    this.init = this.init.bind(this);
   }
 
-  init() {
+  init = () => {
     router.get('/', this.controller.handleList);
     return router;
-  }
+  };
 }
 
 export default LineasApi;

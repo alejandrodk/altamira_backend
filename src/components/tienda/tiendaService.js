@@ -4,46 +4,39 @@ import { getArticleQuantity } from './tiendaHelpers';
 export default class TiendaService {
   constructor(repository) {
     this.repository = repository;
-
-    this.getCartList = this.getCartList.bind(this);
-    this.createClientCart = this.createClientCart.bind(this);
-    this.getClientCart = this.getClientCart.bind(this);
-    this.updateClientCart = this.updateClientCart.bind(this);
-    this.updateCartArticle = this.updateCartArticle.bind(this);
-    this.removeArticleFromCart = this.removeArticleFromCart.bind(this);
   }
 
-  async getCartList() {
+  getCartList = async () => {
     return await this.repository.getCarts();
-  }
+  };
 
-  async createClientCart(data) {
+  createClientCart = async data => {
     try {
       const { cliente, descuento } = data;
       return await this.repository.createCart({ cliente, descuento });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async getClientCart(cliente) {
+  getClientCart = async cliente => {
     try {
       return await this.repository.getClientCart(cliente);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async updateClientCart(data) {
+  updateClientCart = async data => {
     try {
       const { cliente, ...carrito } = data;
       return await this.repository.updateCart({ cliente, carrito });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async updateCartArticle(cliente, articulo, cantidad) {
+  updateCartArticle = async (cliente, articulo, cantidad) => {
     try {
       const { codigo, unidad_min_vta: minVta } = articulo;
 
@@ -69,9 +62,9 @@ export default class TiendaService {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async removeArticleFromCart(cliente, articulo) {
+  removeArticleFromCart = async (cliente, articulo) => {
     try {
       const carrito = await this.repository.getClientCart(cliente);
 
@@ -81,9 +74,9 @@ export default class TiendaService {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async getArticlesByStock(cliente) {
+  getArticlesByStock = async cliente => {
     const carrito = await this.repository.getClientCart(cliente);
 
     return carrito.articulos.reduce(
@@ -107,5 +100,5 @@ export default class TiendaService {
           critics: [],
         },
     );
-  }
+  };
 }

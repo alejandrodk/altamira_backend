@@ -5,12 +5,9 @@ class RubrosController extends BaseController {
   constructor(service) {
     super();
     this.service = service;
-
-    this.handleList = this.handleList.bind(this);
-    this.handleUniqueList = this.handleUniqueList.bind(this);
   }
 
-  async handleList(req, res) {
+  handleList = async (req, res) => {
     const categories = await this.service.getCategoriesList();
     const dtos = categories.map(category => new GetCategoryDto(category));
 
@@ -18,9 +15,9 @@ class RubrosController extends BaseController {
       res,
       data: dtos,
     });
-  }
+  };
 
-  async handleUniqueList(req, res) {
+  handleUniqueList = async (req, res) => {
     const categories = await this.service.getUniqueCategories();
     const dtos = categories.map(category => new GetUniqueCategoryDto(category));
 
@@ -28,7 +25,7 @@ class RubrosController extends BaseController {
       res,
       data: dtos,
     });
-  }
+  };
 }
 
 export default RubrosController;

@@ -5,14 +5,9 @@ class ClientesController extends BaseController {
   constructor(service) {
     super();
     this.service = service;
-
-    this.handleList = this.handleList.bind(this);
-    this.handleListBasic = this.handleListBasic.bind(this);
-    this.handleOne = this.handleOne.bind(this);
-    this.handleOneBasic = this.handleOneBasic.bind(this);
   }
 
-  async handleOne(req, res) {
+  handleOne = async (req, res) => {
     const { id } = req.params;
 
     const client = await this.service.getSingleClient(id);
@@ -24,7 +19,7 @@ class ClientesController extends BaseController {
     });
   }
 
-  async handleOneBasic(req, res) {
+  handleOneBasic = async (req, res) => {
     const { id } = req.params;
 
     const client = await this.service.getSingleClient(id);
@@ -36,7 +31,7 @@ class ClientesController extends BaseController {
     });
   }
 
-  async handleList(req, res) {
+  handleList = async (req, res) => {
     const { limit } = req.query;
 
     const clientes = await this.service.getClientsList({ limit });
@@ -48,7 +43,7 @@ class ClientesController extends BaseController {
     });
   }
 
-  async handleListBasic(req, res) {
+  handleListBasic = async (req, res) => {
     const { limit } = req.query;
 
     const clientes = await this.service.getClientsList({ limit });

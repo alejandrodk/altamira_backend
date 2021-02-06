@@ -1,11 +1,9 @@
 export default class ClientesService {
   constructor(repository) {
     this.repository = repository;
-    this.getSingleClient = this.getSingleClient.bind(this);
-    this.getClientsList = this.getClientsList.bind(this);
   }
 
-  async getSingleClient(id) {
+  getSingleClient = async (id) => {
     try {
       return await this.repository.findById(id);
     } catch (error) {
@@ -13,7 +11,7 @@ export default class ClientesService {
     }
   }
 
-  async getClientsList(options) {
+  getClientsList = async (options) => {
     try {
       return await this.repository.find(options);
     } catch (error) {

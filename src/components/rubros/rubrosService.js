@@ -4,20 +4,18 @@ import { RubrosProps } from './rubros.enums';
 export default class LineasService {
   constructor(repository) {
     this.repository = repository;
-    this.getCategoriesList = this.getCategoriesList.bind(this);
-    this.getUniqueCategories = this.getUniqueCategories.bind(this);
   }
 
-  async getCategoriesList() {
+  getCategoriesList = async () => {
     try {
       const categories = await this.repository.find();
       return categories;
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async getUniqueCategories() {
+  getUniqueCategories = async () => {
     try {
       const categories = await this.repository.find();
       return getSingleObjectsByProperty({
@@ -28,5 +26,5 @@ export default class LineasService {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 }

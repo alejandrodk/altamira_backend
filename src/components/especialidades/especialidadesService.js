@@ -7,23 +7,15 @@ export default class LineasService {
   }
 
   getSpecialities = async () => {
-    try {
-      const specialities = await this.repository.find();
-      return specialities;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    const specialities = await this.repository.find();
+    return specialities;
+  };
 
   getUniqueSpecialities = async () => {
-    try {
-      const specialities = await this.repository.find();
-      return getSingleObjectsByProperty({
-        array: specialities,
-        property: EspecialidadesProps.NOMBRE,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    const specialities = await this.repository.find();
+    return getSingleObjectsByProperty({
+      array: specialities,
+      property: EspecialidadesProps.NOMBRE,
+    });
+  };
 }

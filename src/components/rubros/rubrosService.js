@@ -7,24 +7,16 @@ export default class LineasService {
   }
 
   getCategoriesList = async () => {
-    try {
-      const categories = await this.repository.find();
-      return categories;
-    } catch (error) {
-      console.error(error);
-    }
+    const categories = await this.repository.find();
+    return categories;
   };
 
   getUniqueCategories = async () => {
-    try {
-      const categories = await this.repository.find();
-      return getSingleObjectsByProperty({
-        array: categories,
-        property: RubrosProps.NOMBRE,
-        exclude: ['SIN RUBRO', ''],
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    const categories = await this.repository.find();
+    return getSingleObjectsByProperty({
+      array: categories,
+      property: RubrosProps.NOMBRE,
+      exclude: ['SIN RUBRO', ''],
+    });
   };
 }

@@ -8,49 +8,81 @@ class TiendaController extends BaseController {
   }
 
   handleList = async (req, res) => {
-    const data = await this.service.getCartList();
-    const dtos = data.map(cart => new GetCartDto(cart));
+    try {
+      const data = await this.service.getCartList();
+      const dtos = data.map(cart => new GetCartDto(cart));
 
-    TiendaController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      TiendaController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      TiendaController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   handleOne = async (req, res) => {
-    const { cliente } = req.params;
+    try {
+      const { cliente } = req.params;
 
-    const cart = await this.service.getClientCart(cliente);
-    const dto = new GetCartDto(cart);
+      const cart = await this.service.getClientCart(cliente);
+      const dto = new GetCartDto(cart);
 
-    TiendaController.sendBasicOkResponse({
-      res,
-      data: dto,
-    });
+      TiendaController.sendBasicOkResponse({
+        res,
+        data: dto,
+      });
+    } catch (error) {
+      console.error(error);
+      TiendaController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   createOne = async (req, res) => {
-    const data = req.body;
-    const result = await this.service.createClientCart(data);
+    try {
+      const data = req.body;
+      const result = await this.service.createClientCart(data);
 
-    TiendaController.sendBasicOkResponse({
-      res,
-      data: result,
-    });
+      TiendaController.sendBasicOkResponse({
+        res,
+        data: result,
+      });
+    } catch (error) {
+      console.error(error);
+      TiendaController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   updateOne = async (req, res) => {
-    const { cliente } = req.params;
-    const { articulo, cantidad } = req.body;
-    const result =
-      req.method === 'PUT' ?
-        this.service.updateCartArticle(cliente, articulo, cantidad) :
-        this.service.removeArticleFromCart(cliente, articulo);
+    try {
+      const { cliente } = req.params;
+      const { articulo, cantidad } = req.body;
+      const result =
+        req.method === 'PUT' ?
+          this.service.updateCartArticle(cliente, articulo, cantidad) :
+          this.service.removeArticleFromCart(cliente, articulo);
 
-    TiendaController.sendBasicOkResponse({
-      res,
-      data: result,
-    });
+      TiendaController.sendBasicOkResponse({
+        res,
+        data: result,
+      });
+    } catch (error) {
+      console.error(error);
+      TiendaController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 }
 

@@ -8,13 +8,21 @@ class LineasController extends BaseController {
   }
 
   handleList = async (req, res) => {
-    const brands = await this.service.getBrandsList();
-    const dtos = brands.map(brand => new GetBrandDto(brand));
+    try {
+      const brands = await this.service.getBrandsList();
+      const dtos = brands.map(brand => new GetBrandDto(brand));
 
-    LineasController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      LineasController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      LineasController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 }
 

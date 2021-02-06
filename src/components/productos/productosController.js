@@ -8,42 +8,66 @@ class ProductosController extends BaseController {
   }
 
   handleOne = async (req, res) => {
-    const { id } = req.params;
-    const { complete } = req.query;
+    try {
+      const { id } = req.params;
+      const { complete } = req.query;
 
-    const product = await this.service.getSingleProduct(id);
-    const data = complete ? product : new ProductCatalogDto(product);
+      const product = await this.service.getSingleProduct(id);
+      const data = complete ? product : new ProductCatalogDto(product);
 
-    ProductosController.sendBasicOkResponse({
-      res,
-      data,
-    });
+      ProductosController.sendBasicOkResponse({
+        res,
+        data,
+      });
+    } catch (error) {
+      console.error(error);
+      ProductosController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   handleList = async (req, res) => {
-    const { filter, page, complete } = req.query;
-    const productos = filter ?
-      await this.service.getFilteredProducts({ filter, page }) :
-      await this.service.getProductsList();
+    try {
+      const { filter, page, complete } = req.query;
+      const productos = filter ?
+        await this.service.getFilteredProducts({ filter, page }) :
+        await this.service.getProductsList();
 
-    const data = complete ?
-      productos :
-      productos.map(product => new ProductCatalogDto(product));
+      const data = complete ?
+        productos :
+        productos.map(product => new ProductCatalogDto(product));
 
-    ProductosController.sendBasicOkResponse({
-      res,
-      data,
-    });
+      ProductosController.sendBasicOkResponse({
+        res,
+        data,
+      });
+    } catch (error) {
+      console.error(error);
+      ProductosController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 
   handleListBasic = async (req, res) => {
-    const productos = await this.service.getProductsList();
-    const dtos = productos.map(product => new BasicProductDto(product));
+    try {
+      const productos = await this.service.getProductsList();
+      const dtos = productos.map(product => new BasicProductDto(product));
 
-    ProductosController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
+      ProductosController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      ProductosController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
   };
 }
 

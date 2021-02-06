@@ -4,11 +4,7 @@ export default class LineasService {
   }
 
   getBrandsList = async () => {
-    try {
-      const brands = await this.repository.find();
-      return brands;
-    } catch (error) {
-      console.error(error);
-    }
+    const brands = await this.repository.find();
+    return brands;
   };
 }

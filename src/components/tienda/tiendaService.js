@@ -11,69 +11,49 @@ export default class TiendaService {
   };
 
   createClientCart = async data => {
-    try {
-      const { cliente, descuento } = data;
-      return await this.repository.createCart({ cliente, descuento });
-    } catch (error) {
-      console.error(error);
-    }
+    const { cliente, descuento } = data;
+    return await this.repository.createCart({ cliente, descuento });
   };
 
   getClientCart = async cliente => {
-    try {
-      return await this.repository.getClientCart(cliente);
-    } catch (error) {
-      console.error(error);
-    }
+    return await this.repository.getClientCart(cliente);
   };
 
   updateClientCart = async data => {
-    try {
-      const { cliente, ...carrito } = data;
-      return await this.repository.updateCart({ cliente, carrito });
-    } catch (error) {
-      console.error(error);
-    }
+    const { cliente, ...carrito } = data;
+    return await this.repository.updateCart({ cliente, carrito });
   };
 
   updateCartArticle = async (cliente, articulo, cantidad) => {
-    try {
-      const { codigo, unidad_min_vta: minVta } = articulo;
+    const { codigo, unidad_min_vta: minVta } = articulo;
 
-      const carrito = await this.repository.getClientCart(cliente);
-      const { articulos } = carrito;
+    const carrito = await this.repository.getClientCart(cliente);
+    const { articulos } = carrito;
 
-      const existArticle =
-        articulos.length && articulos?.find(({ codigo: c }) => c === codigo);
+    const existArticle =
+      articulos.length && articulos?.find(({ codigo: c }) => c === codigo);
 
-      existArticle ?
-        (carrito.articulos = articulos.map(art => {
-          if (art.codigo === codigo) {
-            art.cantidad = getArticleQuantity(cantidad, minVta);
-          }
-          return art;
-        })) :
-        (carrito.articulos = [
-          ...articulos,
-          new CreateCartProductDto(articulo, cantidad),
-        ]);
+    existArticle ?
+      (carrito.articulos = articulos.map(art => {
+        if (art.codigo === codigo) {
+          art.cantidad = getArticleQuantity(cantidad, minVta);
+        }
+        return art;
+      })) :
+      (carrito.articulos = [
+        ...articulos,
+        new CreateCartProductDto(articulo, cantidad),
+      ]);
 
-      return await this.repository.updateCart(cliente, carrito);
-    } catch (error) {
-      console.error(error);
-    }
+    return await this.repository.updateCart(cliente, carrito);
   };
 
   removeArticleFromCart = async (cliente, articulo) => {
-    try {
-      const carrito = await this.repository.getClientCart(cliente);
+    const carrito = await this.repository.getClientCart(cliente);
 
-      carrito.articulos = carrito.articulos.filter(({ codigo }) => codigo !== articulo);
+    carrito.articulos = carrito.articulos.filter(({ codigo }) => codigo !== articulo);
 
-      return this.repository.updateCart(cliente, carrito);
-    } catch (error) {
-      console.error(error);
-    }
+    return this.repository.updateCart(cliente, carrito);
   };
 
   getArticlesByStock = async cliente => {

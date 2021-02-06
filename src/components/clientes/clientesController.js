@@ -8,52 +8,84 @@ class ClientesController extends BaseController {
   }
 
   handleOne = async (req, res) => {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    const client = await this.service.getSingleClient(id);
-    const data = new ClientDto(client);
+      const client = await this.service.getSingleClient(id);
+      const data = new ClientDto(client);
 
-    ClientesController.sendBasicOkResponse({
-      res,
-      data,
-    });
-  }
+      ClientesController.sendBasicOkResponse({
+        res,
+        data,
+      });
+    } catch (error) {
+      console.error(error);
+      ClientesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
+  };
 
   handleOneBasic = async (req, res) => {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    const client = await this.service.getSingleClient(id);
-    const data = new BasicClientDto(client);
+      const client = await this.service.getSingleClient(id);
+      const data = new BasicClientDto(client);
 
-    ClientesController.sendBasicOkResponse({
-      res,
-      data,
-    });
-  }
+      ClientesController.sendBasicOkResponse({
+        res,
+        data,
+      });
+    } catch (error) {
+      console.error(error);
+      ClientesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
+  };
 
   handleList = async (req, res) => {
-    const { limit } = req.query;
+    try {
+      const { limit } = req.query;
 
-    const clientes = await this.service.getClientsList({ limit });
-    const dtos = clientes.map(client => new ClientDto(client));
+      const clientes = await this.service.getClientsList({ limit });
+      const dtos = clientes.map(client => new ClientDto(client));
 
-    ClientesController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
-  }
+      ClientesController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      ClientesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
+  };
 
   handleListBasic = async (req, res) => {
-    const { limit } = req.query;
+    try {
+      const { limit } = req.query;
 
-    const clientes = await this.service.getClientsList({ limit });
-    const dtos = clientes.map(client => new BasicClientDto(client));
+      const clientes = await this.service.getClientsList({ limit });
+      const dtos = clientes.map(client => new BasicClientDto(client));
 
-    ClientesController.sendBasicOkResponse({
-      res,
-      data: dtos,
-    });
-  }
+      ClientesController.sendBasicOkResponse({
+        res,
+        data: dtos,
+      });
+    } catch (error) {
+      console.error(error);
+      ClientesController.sendBasicErrorResponse({
+        res,
+        reason: error.reason || error,
+      });
+    }
+  };
 }
 
 export default ClientesController;

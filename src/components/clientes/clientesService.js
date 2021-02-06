@@ -3,19 +3,11 @@ export default class ClientesService {
     this.repository = repository;
   }
 
-  getSingleClient = async (id) => {
-    try {
-      return await this.repository.findById(id);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  getSingleClient = async id => {
+    return await this.repository.findById(id);
+  };
 
-  getClientsList = async (options) => {
-    try {
-      return await this.repository.find(options);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  getClientsList = async options => {
+    return await this.repository.find(options);
+  };
 }
